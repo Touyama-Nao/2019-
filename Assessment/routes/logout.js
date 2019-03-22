@@ -2,7 +2,7 @@
 var express = require('express');
 var router = express.Router();
 var request = require('request');
-var User = require('./models/User.js');
+var User = require('../models/Users.js');
 var session = require('express-session');   //使用session中间件
 
 router.use(session({    // 使用 session 中间件
