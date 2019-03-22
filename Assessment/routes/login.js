@@ -7,6 +7,7 @@ router.get('/',function(req,res){   //get请求用来呈现登陆界面
     res.render('login');    //指向login.ejs 文件
 })
 router.post('/',function(req,res){  //post请求用来提交表单
+    res.writeHead(200,{"Content-Type":"text/plain;charset=UTF-8"});//纯文本
     console.log(req.body);
 })
 
