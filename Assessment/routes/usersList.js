@@ -1,4 +1,5 @@
 /* 获取用户列表操作 */
+var User = require('./user.js');  //导入数据库用户列表
 var express = require('express');
 var router = express.Router();
 var mongojs = require('mongojs');
