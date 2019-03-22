@@ -8,26 +8,46 @@ var db = mongojs('mytestdb', ['Mess',"users",'usersInfo']);
 var bodyParser = require("body-parser");
 
 /* Edit users listing. */
-router.put('/contactlist', function (req, res) {
+
+router.all('*', function(req, res, next) {
+    req.header("Access-Control-Allow-Origin", "*");
+    req.header("Access-Control-Allow-Headers", "X-Requested-With");
+    res.header("Access-Control-Allow-Methods","PUT,POST,GET,DELETE,OPTIONS");
+    res.header("X-Powered-By",' 3.2.1')
+    res.header("Content-Type", "application/json;charset=utf-8");
+    next();
+});
+router.put('/', function (req, res) {
+    if(req.session){
+        res.json({result:"error",message:"请先登陆!"});
+        return;
+    }
     res.set('Content-Type','text/plain');
-    var id = req.params.id;
-    console.log(req.body.acount);
-    db.usersInfo.findAndModify({
+
+    var id = req.query.id;
+    db.users.findAndModify({
         query: {
-            id: mongojs.ObjectId(id)
+            //account: mongojs.ObjectId(id)
+            account: req.session.userName
         },
         updata: {
             $set: { //参数修改
-                account: req.body.account,
-                mailbox: req.body.mailbox,
-                address: req.body.address,
-                introduction: req.body.introduction,
-                age: req.body.age
+                account: req.query.account,
+                mailbox: req.query.mailbox,
+                address: req.query.address,
+                introduction: req.query.introduction,
+                age: req.query.age
             },
         },
         new: true
     }, function (err, doc) {
-        res.json(doc)
+        if(err){
+            console.log(err);
+            res.json({result:"error",message:"参数错误!"});
+            return;
+        }
+        res.json({result:"success",message:null});
+        return;
     })
 })
 

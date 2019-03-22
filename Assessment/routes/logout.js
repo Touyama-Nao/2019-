@@ -14,6 +14,7 @@ router.use(session({    // 使用 session 中间件
     },
 }));
 router.get('/', function (req, res) {
+    res.set('Content-Type','text/plain');
     req.session.sign = false;
     req.session.userName = null; // 删除session
     res.json({result:"登出成功!",message:null});
