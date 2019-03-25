@@ -9,28 +9,30 @@ var db = mongojs('mytestdb', ['Mess',"users",'usersInfo']);
 var bodyParser = require('body-parser');
 router.use(bodyParser.json());
 var session = require('express-session'); //使用session中间件
-router.all('*', function(req, res, next) {
-    res.header("Access-Control-Allow-Origin", "*");
+router.use(session({ // 使用 session 中间件
+    name: "", // 设置 cookie 中保存 session id 的字段名称
+    secret: "secret", // 通过设置 secret 来计算 hash 值并放在 cookie 中，使产生的 signedCookie 防篡改
+    resave: true, // 强制更新 session
+    saveUninitialized: false, // 设置为 false，强制创建一个 session，即使用户未登录
+    secret: 'test secret',
+    cokkie: { maxAge: 60 * 1000 * 300 } //过期时间 ms
+}))
+
+router.all('*', function(req, res, next) {  //设置请求头部防止莫名跨域
+    res.header("Access-Control-Allow-Origin", "*"); //防止因为设置域名为localhost而导致浏览器拒绝生成cookie
     res.header("Access-Control-Allow-Headers", "X-Requested-With");
     res.header("Access-Control-Allow-Methods","PUT,POST,GET,DELETE,OPTIONS");
     res.header("X-Powered-By",' 3.2.1')
     res.header("Content-Type", "application/json;charset=utf-8");
     next();
 });
-router.use(session({ // 使用 session 中间件
-    secret: 'secret', // 对session id 相关的cookie 进行签名
-    resave: true,
-    saveUninitialized: false, // 是否保存未初始化的会话
-    cookie: {
-        maxAge: 1000 * 60 * 3, // 设置 session 的有效时间，单位毫秒
-    },
-}));
 
 router.get('/', function (req, res) { //get请求用来呈现登陆界面
     res.render('error'); //指向login.ejs 文件
 })
 router.post('/', function (req, res) { //post请求用来提交表单
-    console.log(req.body);
+    console.log(req);
+    console.log(req.sessionStore.MemoryStore );
     var LoginDate = req.body;
     db.users.findOne({
         'account': req.body.account,
