@@ -14,7 +14,7 @@ router.post("/", function (req, res, next) { //一定要及时返回值不然会
         if (err) {
             console.log(err);
         }
-        if(req.session){
+        if(req.session.sign == true){
             if (user) {
                 res.json({
                     result: "success",

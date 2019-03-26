@@ -4,13 +4,21 @@ var app = express();
 var router = express.Router();
 var request = require('request');
 var cors = require('cors')
-router.use(cors({credentials: true, origin: 'http://127.0.0.1:3000'}));
+//router.use(cors({credentials: true, origin: 'http://127.0.0.1:3000'}));
 //var User = require('../models/Users.js');
 var mongojs = require('mongojs');
 var db = mongojs('mytestdb', ['Mess',"users",'usersInfo']);
 var bodyParser = require('body-parser');
 router.use(bodyParser.json());
 var session = require('express-session'); //使用session中间件
+router.all('*', function(req, res, next) {  //设置请求头部防止莫名跨域
+    res.header("Access-Control-Allow-Origin", "*"); //防止因为设置域名为localhost而导致浏览器拒绝生成cookie
+    res.header("Access-Control-Allow-Headers", "X-Requested-With");
+    res.header("Access-Control-Allow-Methods","PUT,POST,GET,DELETE,OPTIONS");
+    res.header("X-Powered-By",' 3.2.1')
+    res.header("Content-Type", "application/json;charset=utf-8");
+    next();
+});
 router.use(session({ // 使用 session 中间件
     name: "", // 设置 cookie 中保存 session id 的字段名称
     secret: "secret", // 通过设置 secret 来计算 hash 值并放在 cookie 中，使产生的 signedCookie 防篡改
@@ -20,14 +28,7 @@ router.use(session({ // 使用 session 中间件
     cokkie: { maxAge: 60 * 1000 * 300 } //过期时间 ms
 }))
 
-router.all('*', function(req, res, next) {  //设置请求头部防止莫名跨域
-    res.header("Access-Control-Allow-Origin", "*"); //防止因为设置域名为localhost而导致浏览器拒绝生成cookie
-    res.header("Access-Control-Allow-Headers", "X-Requested-With");
-    res.header("Access-Control-Allow-Methods","PUT,POST,GET,DELETE,OPTIONS");
-    res.header("X-Powered-By",' 3.2.1')
-    res.header("Content-Type", "application/json;charset=utf-8");
-    next();
-});
+
 
 router.get('/', function (req, res) { //get请求用来呈现登陆界面
     res.render('error'); //指向login.ejs 文件

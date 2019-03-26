@@ -19,7 +19,7 @@ router.get('/', function (req, res, next) {
 			if (err) {
 				console.log(err);
 			}
-			if(req.session){
+			if(req.session.sign == true){
 				if(user){
 					res.json({
 						result: "success",
