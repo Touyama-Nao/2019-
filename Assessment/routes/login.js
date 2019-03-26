@@ -3,6 +3,8 @@ var express = require('express');
 var app = express();
 var router = express.Router();
 var request = require('request');
+var cors = require('cors')
+router.use(cors({credentials: true, origin: 'http://127.0.0.1:3000'}));
 //var User = require('../models/Users.js');
 var mongojs = require('mongojs');
 var db = mongojs('mytestdb', ['Mess',"users",'usersInfo']);
