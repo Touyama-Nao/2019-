@@ -31,8 +31,8 @@ router.get('/', function (req, res) { //get请求用来呈现登陆界面
     res.render('error'); //指向login.ejs 文件
 })
 router.post('/', function (req, res) { //post请求用来提交表单
-    console.log(req);
-    console.log(req.sessionStore.MemoryStore );
+    console.log(req.body);
+   // console.log(req.sessionStore.MemoryStore );
     var LoginDate = req.body;
     db.users.findOne({
         'account': req.body.account,
@@ -46,11 +46,16 @@ router.post('/', function (req, res) { //post请求用来提交表单
             if(doc){
                 req.session.sign = true;
                 req.session.userName = req.body.account; //用session保存登录状态
-                res.json({
+/*                 res.json({
                     result: "success",
                     message: '登陆成功!',
                     userid:doc
+                }); */
+                var back = JSON.stringify({
+                    result: "success",
+                    message: '登陆成功!',
                 });
+                res.end(back);
                 return;
             }else{
                 res.json({
