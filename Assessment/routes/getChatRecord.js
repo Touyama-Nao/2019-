@@ -30,7 +30,11 @@ router.post('/', function (req, res) {
     if(req.session.sign == true){   //已经登陆!
 
     }else if(req.session.sign != true){ //还没登陆!
-
+        res.json({
+            result: "error",
+            message: "查询失败!用户ID错误"
+        });
+        return ;
     }
 });
 

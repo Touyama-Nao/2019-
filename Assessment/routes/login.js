@@ -13,7 +13,7 @@ router.use(bodyParser.json());
 var session = require('express-session'); //使用session中间件
 router.all('*', function(req, res, next) {  //设置请求头部防止莫名跨域
     res.header("Access-Control-Allow-Origin", "*"); //防止因为设置域名为localhost而导致浏览器拒绝生成cookie
-    res.header("Access-Control-Allow-Headers", "X-Requested-With");
+    res.header("Access-Control-Allow-Headers", "Content-Type,Content-Length, Authorization, Accept, X-Requested-With");
     res.header("Access-Control-Allow-Methods","PUT,POST,GET,DELETE,OPTIONS");
     res.header("X-Powered-By",' 3.2.1')
     res.header("Content-Type", "application/json;charset=utf-8");

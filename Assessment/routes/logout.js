@@ -5,7 +5,7 @@ var request = require('request');
 var User = require('../models/Users.js');
 var session = require('express-session');   //使用session中间件
 router.all('*', function(req, res, next) {  //补充头部防止莫名跨域
-    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Origin", null);
     res.header("Access-Control-Allow-Headers", "X-Requested-With");
     res.header("Access-Control-Allow-Methods","PUT,POST,GET,DELETE,OPTIONS");
     res.header("X-Powered-By",' 3.2.1')
