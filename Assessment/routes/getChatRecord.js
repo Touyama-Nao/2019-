@@ -29,10 +29,11 @@ router.post('/', function (req, res) {
     res.set('Content-Type','text/plain');
     if(req.session.sign == true){   //已经登陆!
 
+        db.Mess
     }else if(req.session.sign != true){ //还没登陆!
         res.json({
             result: "error",
-            message: "查询失败!用户ID错误"
+            message: "查询失败!用户未登录!"
         });
         return ;
     }

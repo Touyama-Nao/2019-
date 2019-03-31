@@ -69,6 +69,7 @@ router.post('/', function (req, res) { //post请求用来提交表单
             }
         } else if (req.session.sign == true) {
                 req.session.userName = req.body.account; //用session保存登录状态
+                req.session.userid = req.body.id //用来记住用户的id
                 res.json({
                     result: "success",
                     message: 'Nice to see you again!',
