@@ -6,7 +6,7 @@ var User = require('../models/Users.js');
 var session = require('express-session'); //使用session中间件
 var mongojs = require('mongojs');
 var db = mongojs('mytestdb', ['Mess', "users", 'usersInfo']);
-var bodyParser = require("body-parser");
+var bodyParser = require('body-parser');
 router.use(bodyParser.json());
 
 

@@ -10,33 +10,24 @@ router.use(bodyParser.json());
 
 /* Edit users listing. */
 
-router.all('*', function (req, res, next) {
-    req.header("Access-Control-Allow-Origin", null);
-    req.header("Access-Control-Allow-Headers", "X-Requested-With");
-    res.header("Access-Control-Allow-Methods", "PUT,POST,GET,DELETE,OPTIONS");
-    res.header("Access-Control-Allow-Credentials","true");
-    res.header("X-Powered-By", ' 3.2.1')
+router.all('*', function(req, res, next) {  //设置请求头部防止莫名跨域
+    res.header("Access-Control-Allow-Origin", null); //防止因为设置域名为localhost而导致浏览器拒绝生成cookie,这是什么智障问题
+    res.header("Access-Control-Allow-Headers", "Content-Type,Content-Length, Authorization, Accept, X-Requested-With");
+	res.header("Access-Control-Allow-Methods","PUT,POST,GET,DELETE,OPTIONS");
+	res.header("Access-Control-Allow-Credentials","true");
+    res.header("X-Powered-By",' 3.2.1')
     res.header("Content-Type", "application/json;charset=utf-8");
     next();
 });
-router.put('/', function (req, res) {
-    if (req.session) {
-        res.json({
-            result: "error",
-            message: "请先登陆!"
-        });
-        return;
-    }
-    res.set('Content-Type', 'text/plain');
-
-    var id = req.query.id;
+router.post('/', function (req, res) {
+    console.log(req.session);
     if (req.session.sign == true) {
         db.users.findAndModify({
             query: {
                 //account: mongojs.ObjectId(id)
-                account: req.session.userName
+                id: parseInt(req.session.userid)
             },
-            updata: {
+            update: {
                 $set: { //参数修改
                     account: req.query.account,
                     mailbox: req.query.mailbox,

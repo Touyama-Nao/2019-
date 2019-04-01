@@ -7,6 +7,7 @@ var mongojs = require('mongojs');
 var db = mongojs('mytestdb', ['Mess', "users", 'usersInfo']);
 var bodyParser = require("body-parser");
 router.use(bodyParser.json());
+router.use(bodyParser.urlencoded({ extended: false}))
 
 router.all('*', function (req, res, next) { //设置请求头部防止莫名跨域
 	res.header("Access-Control-Allow-Origin", null); //防止因为设置域名为localhost而导致浏览器拒绝生成cookie,这是什么智障问题
@@ -20,10 +21,10 @@ router.all('*', function (req, res, next) { //设置请求头部防止莫名跨�
 
 /* GET users listing. */
 router.get('/', function (req, res, next) {
-	res.set('Content-Type', 'text/plain');
-	console.log(req.body);
+/* 	res.set('Content-Type', 'text/plain'); */
+	console.log(req.query);	//get请求参数获取
 	db.users.find({
-		id: parseInt(req.body.id)
+		id: parseInt(req.query.id)
 	}, {
 		"_id": 0,
 		"logindate": 0,
