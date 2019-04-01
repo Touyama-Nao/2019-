@@ -7,6 +7,7 @@ var session = require('express-session'); //使用session中间件
 var mongojs = require('mongojs');
 var db = mongojs('mytestdb', ['Mess', "users", 'usersInfo']);
 var bodyParser = require("body-parser");
+router.use(bodyParser.json());
 
 
 router.all('*', function(req, res, next) {  //设置请求头部防止莫名跨域

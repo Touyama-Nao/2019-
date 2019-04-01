@@ -6,6 +6,7 @@ var router = express.Router();
 var mongojs = require('mongojs');
 var db = mongojs('mytestdb', ['Mess', "users", 'usersInfo']);
 var bodyParser = require("body-parser");
+router.use(bodyParser.json());
 
 /* Edit users listing. */
 
