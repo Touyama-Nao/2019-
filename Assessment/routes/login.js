@@ -59,17 +59,17 @@ router.post('/', function (req, res) { //post请求用来提交表单
                     message: '登陆成功!',
                     userid:doc
                 }); */
-                var back = JSON.stringify({
+                var back = {
                     result: "success",
                     message: '登陆成功!',
                     userid:doc
-                });
-                res.end("123");
-                res.end(JSON.stringify({
+                };
+/*                 res.end(JSON.stringify({
                     'result': "success",
                     'message': '登陆成功!',
                     'userid':doc
-                }));
+                })); */
+                res.json(back);
 
                 return;
             }else{
