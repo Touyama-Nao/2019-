@@ -7,6 +7,16 @@ var mongojs = require('mongojs');
 var db = mongojs('mytestdb', ['Mess',"users",'usersInfo']);
 var bodyParser = require("body-parser");
 
+router.all('*', function(req, res, next) {  //设置请求头部防止莫名跨域
+    res.header("Access-Control-Allow-Origin", null); //防止因为设置域名为localhost而导致浏览器拒绝生成cookie,这是什么智障问题
+    res.header("Access-Control-Allow-Headers", "Content-Type,Content-Length, Authorization, Accept, X-Requested-With");
+	res.header("Access-Control-Allow-Methods","PUT,POST,GET,DELETE,OPTIONS");
+	res.header("Access-Control-Allow-Credentials","true");
+    res.header("X-Powered-By",' 3.2.1')
+    res.header("Content-Type", "application/json;charset=utf-8");
+    next();
+});
+
 /* GET users listing. */
 router.get('/', function (req, res, next) {
 	res.set('Content-Type','text/plain');

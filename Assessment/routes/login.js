@@ -12,14 +12,18 @@ var bodyParser = require('body-parser');
 router.use(bodyParser.json());
 var session = require('express-session'); //使用session中间件
 router.all('*', function(req, res, next) {  //设置请求头部防止莫名跨域
-    res.header("Access-Control-Allow-Origin", "*"); //防止因为设置域名为localhost而导致浏览器拒绝生成cookie
+    res.header("Access-Control-Allow-Origin", null); //防止因为设置域名为localhost而导致浏览器拒绝生成cookie
     res.header("Access-Control-Allow-Headers", "Content-Type,Content-Length, Authorization, Accept, X-Requested-With");
     res.header("Access-Control-Allow-Methods","PUT,POST,GET,DELETE,OPTIONS");
+    res.header("Access-Control-Allow-Credentials","true");
     res.header("X-Powered-By",' 3.2.1')
     res.header("Content-Type", "application/json;charset=utf-8");
     next();
 });
 router.use(session({ // 使用 session 中间件
+    sign:false,
+    userName:"默认名字",
+    userid:0,
     name: "", // 设置 cookie 中保存 session id 的字段名称
     secret: "secret", // 通过设置 secret 来计算 hash 值并放在 cookie 中，使产生的 signedCookie 防篡改
     resave: true, // 强制更新 session
@@ -35,6 +39,7 @@ router.get('/', function (req, res) { //get请求用来呈现登陆界面
 })
 router.post('/', function (req, res) { //post请求用来提交表单
     console.log(req.body);
+    console.log(req.session);
    // console.log(req.sessionStore.MemoryStore );
     var LoginDate = req.body;
     db.users.findOne({
@@ -57,8 +62,15 @@ router.post('/', function (req, res) { //post请求用来提交表单
                 var back = JSON.stringify({
                     result: "success",
                     message: '登陆成功!',
+                    userid:doc
                 });
-                res.end(back);
+                res.end("123");
+                res.end(JSON.stringify({
+                    'result': "success",
+                    'message': '登陆成功!',
+                    'userid':doc
+                }));
+
                 return;
             }else{
                 res.json({
@@ -69,7 +81,7 @@ router.post('/', function (req, res) { //post请求用来提交表单
             }
         } else if (req.session.sign == true) {
                 req.session.userName = req.body.account; //用session保存登录状态
-                req.session.userid = req.body.id //用来记住用户的id
+                req.session.userid = doc.userid //用来记住用户的id
                 res.json({
                     result: "success",
                     message: 'Nice to see you again!',

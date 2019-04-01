@@ -10,9 +10,10 @@ var bodyParser = require("body-parser");
 /* Edit users listing. */
 
 router.all('*', function (req, res, next) {
-    req.header("Access-Control-Allow-Origin", "*");
+    req.header("Access-Control-Allow-Origin", null);
     req.header("Access-Control-Allow-Headers", "X-Requested-With");
     res.header("Access-Control-Allow-Methods", "PUT,POST,GET,DELETE,OPTIONS");
+    res.header("Access-Control-Allow-Credentials","true");
     res.header("X-Powered-By", ' 3.2.1')
     res.header("Content-Type", "application/json;charset=utf-8");
     next();
