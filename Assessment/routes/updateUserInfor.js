@@ -29,11 +29,11 @@ router.post('/', function (req, res) {
             },
             update: {
                 $set: { //参数修改
-                    account: req.query.account,
-                    mailbox: req.query.mailbox,
-                    address: req.query.address,
-                    introduction: req.query.introduction,
-                    age: req.query.age
+                    account: req.body.account,
+                    mailbox: req.body.mailbox,
+                    address: req.body.address,
+                    introduction: req.body.introduction,
+                    age: req.body.age
                 },
             },
             new: true
