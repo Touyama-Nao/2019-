@@ -33,6 +33,13 @@ router.post('/', function (req, res) {
 	res.set('Content-Type', 'text/plain');
 	if (req.session.sign == true) { //已经登陆!
 		var record = []; //填充记录用的实际数组
+		if(req.session.userid == req.body.id){
+			res.json({
+				result: "error",
+				message: "参数错误!不能获取跟自己的历史记录！"
+			});
+			return;
+		}
 		db.Mess.find({ //多层查找怎么写
 			id: req.session.userid //查找接受用户id 
 		}, {
