@@ -43,7 +43,8 @@ router.get('/', function (req, res) {
 				return;
 			}
 			console.log(docs);
-			var unreadrecord = docs.UnreadMess //将未读消息收藏起来
+			console.log()
+			var unreadrecord = docs[0].UnreadMess //将未读消息收藏起来
 			db.Mess.findAndModify({
 					query: {
 						id: req.session.id
@@ -58,7 +59,6 @@ router.get('/', function (req, res) {
 				},
 				function (err, doc) {
 					console.log(doc);
-					return;
 				}
 				//更新数组
 			)
