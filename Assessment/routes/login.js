@@ -7,7 +7,7 @@ var cors = require('cors')
 //router.use(cors({credentials: true, origin: 'http://127.0.0.1:3000'}));
 //var User = require('../models/Users.js');
 var mongojs = require('mongojs');
-var db = mongojs('Backstage', ['Mess', "users", 'usersInfo']);
+var db = mongojs("back:As333666@127.0.0.1/Backstage", ['Mess', "users", 'usersInfo']);
 var bodyParser = require('body-parser');
 router.use(bodyParser.urlencoded({ extended: false }))
 router.use(bodyParser.json());
