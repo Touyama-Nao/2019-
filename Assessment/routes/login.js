@@ -41,9 +41,6 @@ router.get('/', function (req, res) { //get请求用来呈现登陆界面
 	res.render('error'); //指向login.ejs 文件
 })
 router.post('/', function (req, res) { //post请求用来提交表单
-	console.log(req.body);
-	console.log(req.body);
-	console.log(req.session);
 	// console.log(req.sessionStore.MemoryStore );
 	//var LoginDate = req.body;
 	db.users.findOne({

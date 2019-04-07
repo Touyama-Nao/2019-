@@ -22,7 +22,6 @@ router.all('*', function (req, res, next) { //设置请求头部防止莫名跨�
 /* GET users listing. */
 router.get('/', function (req, res, next) {
 /* 	res.set('Content-Type', 'text/plain'); */
-	console.log(req.query);	//get请求参数获取
 	db.users.find({
 		id: parseInt(req.query.id)
 	}, {
@@ -37,7 +36,6 @@ router.get('/', function (req, res, next) {
 			return;
 		}
 		if (req.session.sign == true) {
-			console.log(doc);
 			if (JSON.stringify(doc) != '[]') {
 				res.json({
 					result: "success",

@@ -20,7 +20,6 @@ router.all('*', function(req, res, next) {  //设置请求头部防止莫名跨�
     next();
 });
 router.post('/', function (req, res) {
-    console.log(req.session);
     if (req.session.sign == true) {
         db.users.findAndModify({
             query: {

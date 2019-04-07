@@ -52,7 +52,6 @@ router.post('/', function (req, res) {
 				});
 				return;
 			} else {
-				console.log(docs.HistoricalMess);
 				if (JSON.stringify(docs[0].HistoricalMess) !== '[]') {
 					docs[0].HistoricalMess.forEach(function (each) {
 						if (each.receiver == req.body.id || each.sender == req.body.id) { //如果记录跟这个人有关的话
