@@ -34,10 +34,12 @@ router.use(session({ // 使用 session 中间件
 		maxAge: 60 * 1000 * 300
 	} //过期时间 ms
 }))
-
-
-
 router.get('/', function (req, res) { //get请求用来呈现登陆界面
+/* 	res.render('../public/html/error.html', {
+        status: 404,
+        title: '喔嚯gg!',
+	}); */
+	res.status(404);
 	res.render('error'); //指向login.ejs 文件
 })
 router.post('/', function (req, res) { //post请求用来提交表单
