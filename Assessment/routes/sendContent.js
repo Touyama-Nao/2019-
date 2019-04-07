@@ -50,8 +50,10 @@ router.post('/', function (req, res) {
 			unread.sender = req.session.userid;	//将发送者的id赋成当前用户id
 			console.log(unread);
 			console.log(doc[0]);
-			var result = doc[0].UnreadMess;	//查询返回数组
+			var result = doc[0].UnreadMess;	//查询返回未读消息数组
+			var result2 = doc[0].HistoricalMess //查询返回已读消息数组
 			result.push(unread);
+			result2.push(unread);
 /* 			db.Mess[req.body.receiver].UnreadMess.insert(unread,function(err,doc){	//将未读消息插入到接受者的数据类型里面
 				res.json(doc);
 			});
@@ -80,6 +82,7 @@ router.post('/', function (req, res) {
 			}) */
 			console.log(result);
 			db.Mess.update({'id':parseInt(req.body.receiver)},{$set:{'UnreadMess':result}})
+			db.Mess.update({'id':parseInt(req.body.receiver)},{$set:{'HistoricalMess':result2}})
 			res.json({
 				result: "success",
 				message: "发送成功!"

@@ -64,7 +64,7 @@ router.post('/', function (req, res) { //post请求用来提交表单
 			console.log(err);
 			res.json({
 				result: "error",
-				message: '登陆失败!账号或密码错误'
+				message: '哦豁，翻车！登陆失败!账号或密码错误'
 			});
 			return;
 		}
@@ -72,7 +72,7 @@ router.post('/', function (req, res) { //post请求用来提交表单
 			if (doc) {
 				req.session.sign = true;
 				req.session.userid = doc.id //用来记住用户的id
-				req.session.userName = req.query.account; //用session保存登录状态
+				req.session.userName = req.body.account; //用session保存登录状态
 				/*                 res.json({
 				                    result: "success",
 				                    message: '登陆成功!',
@@ -96,26 +96,35 @@ router.post('/', function (req, res) { //post请求用来提交表单
 				req.session.userid = null //用来记住用户的id
 				res.json({
 					result: "error",
-					message: '登陆失败!账号或密码错误'
+					message: '哦豁，翻车！登陆失败!账号或密码错误'
 				});
 				return;
 			}
 		} else if (req.session.sign == true) {
 			if (doc) {
-				req.session.userName = req.body.account; //用session保存登录状态
-				req.session.userid = doc.id //用来记住用户的id
-				res.json({
-					result: "success",
-					message: 'Nice to see you again!',
-					userid: doc
-				});
-				return;
+				if(req.session.userName == req.body.account){
+					req.session.userName = req.body.account; //用session保存登录状态
+					req.session.userid = doc.id //用来记住用户的id
+					res.json({
+						result: "success",
+						message: 'Nice to see you again!',
+						userid: doc
+					});
+					return;
+				}else if(req.session.userName != req.body.account){
+					res.json({
+						result: "error",
+						message: '朋友还没登出呢，那么着急登陆第二个账号？',
+						userid: doc
+					});
+					return;
+				}
 			} else {
 				req.session.userName = null; //用session保存登录状态
 				req.session.userid = null //用来记住用户的id
 				res.json({
 					result: "error",
-					message: '登陆失败!账号或密码错误'
+					message: '哦豁，翻车！登陆失败!账号或密码错误'
 				});
 				return;
 			}

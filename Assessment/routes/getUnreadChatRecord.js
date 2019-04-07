@@ -47,7 +47,7 @@ router.get('/', function (req, res) {
 			var unreadrecord = docs[0].UnreadMess //将未读消息收藏起来
 			db.Mess.findAndModify({
 					query: {
-						id: req.session.id
+						id: req.session.userid
 
 					},
 					update: {
@@ -59,6 +59,11 @@ router.get('/', function (req, res) {
 				},
 				function (err, doc) {
 					console.log(doc);
+					if(doc){
+						console.log(req.session.userName + "刚刚获取了未读消息！未读消息已清空");
+					}else{
+						console.log(req.session.userName + "刚刚获取失败未读消息！未读消息未清空");
+					}
 				}
 				//更新数组
 			)
