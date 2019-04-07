@@ -42,13 +42,13 @@ router.get('/', function (req, res) { //get请求用来呈现登陆界面
 })
 router.post('/', function (req, res) { //post请求用来提交表单
 	console.log(req.body);
-	console.log(req.query);
+	console.log(req.body);
 	console.log(req.session);
 	// console.log(req.sessionStore.MemoryStore );
 	//var LoginDate = req.body;
 	db.users.findOne({
-		'account': req.query.account,
-		'password': parseInt(req.query.password) //这里要注意parseInt!
+		'account': req.body.account,
+		'password': parseInt(req.body.password) //这里要注意parseInt!
 	}, {
 		"_id": 0,
 		"logindate": 0,
@@ -102,7 +102,7 @@ router.post('/', function (req, res) { //post请求用来提交表单
 			}
 		} else if (req.session.sign == true) {
 			if (doc) {
-				req.session.userName = req.query.account; //用session保存登录状态
+				req.session.userName = req.body.account; //用session保存登录状态
 				req.session.userid = doc.id //用来记住用户的id
 				res.json({
 					result: "success",

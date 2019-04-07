@@ -22,9 +22,9 @@ router.all('*', function (req, res, next) { //设置请求头部防止莫名跨�
 /* GET users listing. */
 router.get('/', function (req, res, next) {
 /* 	res.set('Content-Type', 'text/plain'); */
-	console.log(req.query);	//get请求参数获取
+	console.log(req.body);	//get请求参数获取
 	db.users.find({
-		id: parseInt(req.query.id)
+		id: parseInt(req.body.id)
 	}, {
 		"_id": 0,
 		"logindate": 0,
