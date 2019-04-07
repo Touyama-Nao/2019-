@@ -40,32 +40,6 @@ router.post('/', function (req, res) {
 			});
 			return;
 		}
-		db.Mess.find({ //多层查找怎么写
-			id: req.session.userid //查找接受用户id 
-		}, {
-
-		}, function (err, docs) {
-			if (err) {
-				res.json({
-					result: "error",
-					message: "参数错误!"
-				});
-				return;
-			} else {
-				if (JSON.stringify(docs[0].HistoricalMess) !== '[]') {
-					docs[0].HistoricalMess.forEach(function (each) {
-						if (each.receiver == req.body.id || each.sender == req.body.id) { //如果记录跟这个人有关的话
-							record.push(each); //将这条记录放进去
-						}
-					})
-				}
-				res.json({
-					result: "success",
-					message: record
-				});
-				return;
-			}
-		});
 		db.Mess.find({
 			id: req.session.userid
 		}, {
@@ -102,6 +76,33 @@ router.post('/', function (req, res) {
 				}) //更新数组)
 			}
 		})
+		db.Mess.find({ //多层查找怎么写
+			id: req.session.userid //查找接受用户id 
+		}, {
+
+		}, function (err, docs) {
+			if (err) {
+				res.json({
+					result: "error",
+					message: "参数错误!"
+				});
+				return;
+			} else {
+				console.log(docs);
+				if (JSON.stringify(docs[0].HistoricalMess) != '[]') {
+					docs[0].HistoricalMess.forEach(function (each) {
+						if (each.receiver == req.body.id || each.sender == req.body.id) { //如果记录跟这个人有关的话
+							record.push(each); //将这条记录放进去
+						}
+					})
+				}
+				res.json({
+					result: "success",
+					message: record
+				});
+				return;
+			}
+		});
 	} else if (req.session.sign != true) { //还没登陆!
 		res.json({
 			result: "error",

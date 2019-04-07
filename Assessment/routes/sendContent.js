@@ -42,46 +42,50 @@ router.post('/', function (req, res) {
 					message: "参数错误!"
 				})
 			}
-			var unread = req.body;	//设置未读消息
-			unread.date = new Date();	//将发送时间设置成当前接受到请求的时间
-			unread.sender = req.session.userid;	//将发送者的id赋成当前用户id
-			var result = doc[0].UnreadMess;	//查询返回未读消息数组
-			var result2 = doc[0].HistoricalMess //查询返回已读消息数组
-			result.push(unread);
-			result2.push(unread);
-/* 			db.Mess[req.body.receiver].UnreadMess.insert(unread,function(err,doc){	//将未读消息插入到接受者的数据类型里面
-				res.json(doc);
-			});
-			db.Mess[req.body.receiver].HistoricalMess.insert(unread,function(err,doc){	//将未读消息插入到接受者的历史消息里面
-				res.json(doc);
-			});
-			db.Mess[req.session.userid].HistoricalMess.insert(unread,function(err,doc){	//将发送的消息插入到当前发送者的历史消息里面
-				res.json(doc);
-			}); */
-/* 			db.Mess.findAndModify({
-				query: {
-					id: req.session.userid
-				},
-				update: {
-					$set: {
-						UnreadMess: result
+			console.log(JSON.stringify(doc[0]));
+			if(doc[0] != undefined){
+				var unread = req.body;	//设置未读消息
+				unread.date = new Date();	//将发送时间设置成当前接受到请求的时间
+				unread.sender = req.session.userid;	//将发送者的id赋成当前用户id
+				var result = doc[0].UnreadMess;	//查询返回未读消息数组
+				var result2 = doc[0].HistoricalMess //查询返回已读消息数组
+				result.push(unread);
+				result2.push(unread);
+				db.Mess.update({'id':parseInt(req.body.receiver)},{$set:{'UnreadMess':result}})
+				db.Mess.update({'id':parseInt(req.body.receiver)},{$set:{'HistoricalMess':result2}})
+				db.Mess.find({
+					id:	parseInt(req.session.userid)//查找发送用户id 
+				}, function (err, doc) {
+					if(err){
+						res.json({
+							result: "error",
+							message: "参数错误!"
+						})
 					}
-				},
-				new:true,
-				function (err, doc) {
-					console.log(doc);
-					return;
-				}
-				//更新数组
+					if(doc[0] != undefined){
+						var result3 = doc[0].HistoricalMess//存入发送者的历史记录
+						result3.push(req.body);
+						db.Mess.update({'id':parseInt(req.session.userid)},{$set:{'HistoricalMess':result3}})
+					}else{
+						res.json({
+							result: "error",
+							message: "参数错误!"
+						})
+					}
+				})
+				res.json({
+					result: "success",
+					message: "发送成功!"
+				});
+				return;
+			}else{
+				res.json({
+					result: "error",
+					message: "参数错误!"
+				});
+				return;
+			}
 
-			}) */
-			db.Mess.update({'id':parseInt(req.body.receiver)},{$set:{'UnreadMess':result}})
-			db.Mess.update({'id':parseInt(req.body.receiver)},{$set:{'HistoricalMess':result2}})
-			res.json({
-				result: "success",
-				message: "发送成功!"
-			});
-			return;
 		})
 	} else if (req.session.sign != true) { //还没登陆!
 		res.json({

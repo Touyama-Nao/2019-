@@ -36,7 +36,7 @@ router.get('/', function (req, res, next) {
 			return;
 		}
 		if (req.session.sign == true) {
-			if (JSON.stringify(doc) != '[]') {
+			if (JSON.stringify(doc[0]) != '[]') {
 				res.json({
 					result: "success",
 					message: doc

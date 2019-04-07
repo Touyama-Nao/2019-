@@ -21,6 +21,14 @@ router.all('*', function(req, res, next) {  //设置请求头部防止莫名跨�
 });
 router.post('/', function (req, res) {
     if (req.session.sign == true) {
+        var myReg=/^[a-zA-Z0-9_-]+@([a-zA-Z0-9]+\.)+(com|cn|net|org)$/;
+        if(!myReg.test(req.body.mailbox)){
+            res.json({
+                result: "error",
+                message: "邮箱格式错误!"
+            });
+            return;
+        }
         db.users.findAndModify({
             query: {
                 //account: mongojs.ObjectId(id)

@@ -45,6 +45,7 @@ router.get('/', function (req, res) { //get请求用来呈现登陆界面
 router.post('/', function (req, res) { //post请求用来提交表单
 	// console.log(req.sessionStore.MemoryStore );
 	//var LoginDate = req.body;
+	var accountname = req.body.account.replace(/<[^>]+>/g,"");//去掉所有的html标记
 	db.users.findOne({
 		'account': req.body.account,
 		'password': parseInt(req.body.password) //这里要注意parseInt!
@@ -91,6 +92,7 @@ router.post('/', function (req, res) { //post请求用来提交表单
 
 				return;
 			} else {
+				req.session.sign = false;
 				req.session.userName = null; //用session保存登录状态
 				req.session.userid = null //用来记住用户的id
 				res.json({
@@ -114,11 +116,11 @@ router.post('/', function (req, res) { //post请求用来提交表单
 					res.json({
 						result: "error",
 						message: '朋友还没登出呢，那么着急登陆第二个账号？',
-						userid: doc
 					});
 					return;
 				}
 			} else {
+				req.session.sign = false;
 				req.session.userName = null; //用session保存登录状态
 				req.session.userid = null //用来记住用户的id
 				res.json({
