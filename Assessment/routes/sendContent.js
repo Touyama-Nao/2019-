@@ -36,7 +36,7 @@ router.post('/', function (req, res) {
 	console.log(req.body);
 	if (req.session.sign == true) { //已经登陆!
 		db.Mess.find({
-			id:	parseInt(req.body.receiver)//查找接受用户id 
+			id:	parseInt(req.query.receiver)//查找接受用户id 
 		}, function (err, doc) {
 			console.log(doc);
 			if(err){
@@ -45,7 +45,7 @@ router.post('/', function (req, res) {
 					message: "参数错误!"
 				})
 			}
-			var unread = req.body;	//设置未读消息
+			var unread = req.query;	//设置未读消息
 			unread.date = new Date();	//将发送时间设置成当前接受到请求的时间
 			unread.sender = req.session.userid;	//将发送者的id赋成当前用户id
 			console.log(unread);
@@ -79,7 +79,7 @@ router.post('/', function (req, res) {
 
 			}) */
 			console.log(result);
-			db.Mess.update({'id':parseInt(req.body.receiver)},{$set:{'UnreadMess':result}})
+			db.Mess.update({'id':parseInt(req.query.receiver)},{$set:{'UnreadMess':result}})
 			res.json({
 				result: "success",
 				message: "发送成功!"

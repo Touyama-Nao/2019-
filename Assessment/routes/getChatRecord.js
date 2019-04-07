@@ -34,7 +34,7 @@ router.post('/', function (req, res) {
 	if (req.session.sign == true) { //已经登陆!
 		var record = []; //填充记录用的实际数组
 		db.Mess.find({ //多层查找怎么写
-			id: req.body.id //查找接受用户id 
+			id: req.query.id //查找接受用户id 
 		}, {
 
 		}, function (err, docs) {
@@ -46,7 +46,7 @@ router.post('/', function (req, res) {
 				return;
 			} else {
 				docs.HistoricalMess.forEach(function (each) {
-					if (each.receiver == req.body.id || each.sender == req.body.id) { //如果记录跟这个人有关的话
+					if (each.receiver == req.query.id || each.sender == req.query.id) { //如果记录跟这个人有关的话
 						record.push(each); //将这条记录放进去
 					}
 				})
@@ -71,7 +71,7 @@ router.post('/', function (req, res) {
 			} else {
 				var unread = [];
 				docs.UnreadMess.forEach(function (each) { //更新未读消息
-					if (each.sender != req.body.id) {
+					if (each.sender != req.query.id) {
 						unread.push(each); //准备更新未读数组
 					}
 				})
