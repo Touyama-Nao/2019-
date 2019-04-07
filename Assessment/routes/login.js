@@ -7,8 +7,9 @@ var cors = require('cors')
 //router.use(cors({credentials: true, origin: 'http://127.0.0.1:3000'}));
 //var User = require('../models/Users.js');
 var mongojs = require('mongojs');
-var db = mongojs('mytestdb', ['Mess', "users", 'usersInfo']);
+var db = mongojs('Backstage', ['Mess', "users", 'usersInfo']);
 var bodyParser = require('body-parser');
+router.use(bodyParser.urlencoded({ extended: false }))
 router.use(bodyParser.json());
 var session = require('express-session'); //使用session中间件
 router.all('*', function (req, res, next) { //设置请求头部防止莫名跨域
@@ -17,7 +18,7 @@ router.all('*', function (req, res, next) { //设置请求头部防止莫名跨�
 	res.header("Access-Control-Allow-Methods", "PUT,POST,GET,DELETE,OPTIONS");
 	res.header("Access-Control-Allow-Credentials", "true");
 	res.header("X-Powered-By", ' 3.2.1')
-	res.header("Content-Type", "application/json;charset=utf-8");
+	res.header("Content-Type", "application/x-www-form-urlencoded");
 	next();
 });
 router.use(session({ // 使用 session 中间件

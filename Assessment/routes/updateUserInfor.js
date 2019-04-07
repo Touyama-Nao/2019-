@@ -4,7 +4,7 @@ var UserInfo = require('../models/UsersInfo.js'); //导入数据库用户信息
 var express = require('express');
 var router = express.Router();
 var mongojs = require('mongojs');
-var db = mongojs('mytestdb', ['Mess', "users", 'usersInfo']);
+var db = mongojs('Backstage', ['Mess', "users", 'usersInfo']);
 var bodyParser = require("body-parser");
 router.use(bodyParser.json());
 
