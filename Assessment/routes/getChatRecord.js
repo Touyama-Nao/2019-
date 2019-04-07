@@ -45,9 +45,9 @@ router.post('/', function (req, res) {
 				});
 				return;
 			} else {
-				console.log(docs);
-				if (JSON.stringify(docs) !== '[]') {
-					docs.HistoricalMess.forEach(function (each) {
+				console.log(docs.HistoricalMess);
+				if (JSON.stringify(docs[0].HistoricalMess) !== '[]') {
+					docs[0].HistoricalMess.forEach(function (each) {
 						if (each.receiver == req.body.id || each.sender == req.body.id) { //如果记录跟这个人有关的话
 							record.push(each); //将这条记录放进去
 						}
@@ -73,8 +73,8 @@ router.post('/', function (req, res) {
 				return;
 			} else {
 				var unread = [];
-				if (JSON.stringify(docs) !== '[]') {
-					docs.HistoricalMess.forEach(function (each) {
+				if (JSON.stringify(docs[0].HistoricalMess) !== '[]') {
+					docs[0].HistoricalMess.forEach(function (each) {
 						if (each.receiver != req.body.id && each.sender != req.body.id) { //如果记录跟这个人有关的话
 							unread.push(each); //将这条记录放进去
 						}
