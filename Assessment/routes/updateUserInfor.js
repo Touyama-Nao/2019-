@@ -29,7 +29,7 @@ router.post('/', function (req, res) {
             },
             update: {
                 $set: { //参数修改
-                    account: req.body.account,
+                    nickname: req.body.nickname,
                     mailbox: req.body.mailbox,
                     address: req.body.address,
                     introduction: req.body.introduction,
