@@ -20,7 +20,7 @@ router.all('*', function(req, res, next) {  //设置请求头部防止莫名跨�
 });
 
 router.post("/", function (req, res, next) { //一定要及时返回值不然会报错,请求头设置错误
-    db.users.find({},{"_id":0,"logindate":0,"nickname":0,'password':0,'address':0,'mailbox':0,'introduction':0,'age':0},function (err, user) { //不要反悔某些字段
+    db.users.find({},{"_id":0,"logindate":0,"account":0,'password':0,'address':0,'mailbox':0,'introduction':0,'age':0},function (err, user) { //不要反悔某些字段
         if (err) {
             console.log(err);
         }
