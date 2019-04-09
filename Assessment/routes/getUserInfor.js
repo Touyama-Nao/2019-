@@ -39,19 +39,19 @@ router.get('/', function (req, res, next) {
 			if (JSON.stringify(doc) != '[]') {
 				res.json({
 					result: "success",
-					message: doc
+					message: doc[0]
 				});
 				return;
 			} else {
 				res.json({
-					result: "error",
+					result: "failed",
 					message: "查询失败!用户ID错误"
 				});
 				return;
 			}
 		} else {
 			res.json({
-				result: "error",
+				result: "failed",
 				message: "请先登录!"
 			});
 			return;

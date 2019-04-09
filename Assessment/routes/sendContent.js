@@ -38,7 +38,7 @@ router.post('/', function (req, res) {
 		}, function (err, doc) {
 			if(err){
 				res.json({
-					result: "error",
+					result: "failed",
 					message: "参数错误!"
 				})
 			}
@@ -58,7 +58,7 @@ router.post('/', function (req, res) {
 				}, function (err, doc) {
 					if(err){
 						res.json({
-							result: "error",
+							result: "failed",
 							message: "参数错误!"
 						})
 					}
@@ -68,7 +68,7 @@ router.post('/', function (req, res) {
 						db.Mess.update({'id':parseInt(req.session.userid)},{$set:{'HistoricalMess':result3}})
 					}else{
 						res.json({
-							result: "error",
+							result: "failed",
 							message: "参数错误!"
 						})
 					}
@@ -80,7 +80,7 @@ router.post('/', function (req, res) {
 				return;
 			}else{
 				res.json({
-					result: "error",
+					result: "failed",
 					message: "参数错误!"
 				});
 				return;
@@ -89,7 +89,7 @@ router.post('/', function (req, res) {
 		})
 	} else if (req.session.sign != true) { //还没登陆!
 		res.json({
-			result: "error",
+			result: "failed",
 			message: "请先登录!"
 		});
 		return;

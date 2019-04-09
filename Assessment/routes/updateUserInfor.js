@@ -24,7 +24,7 @@ router.post('/', function (req, res) {
         var myReg=/^[a-zA-Z0-9_-]+@([a-zA-Z0-9]+\.)+(com|cn|net|org)$/;
         if(!myReg.test(req.body.mailbox)){
             res.json({
-                result: "error",
+                result: "failed",
                 message: "邮箱格式错误!"
             });
             return;
@@ -48,7 +48,7 @@ router.post('/', function (req, res) {
             if (err) {
                 console.log(err);
                 res.json({
-                    result: "error",
+                    result: "failed",
                     message: "参数错误!"
                 });
                 return;
@@ -61,7 +61,7 @@ router.post('/', function (req, res) {
         })
     } else {
         res.json({
-            result: "error",
+            result: "failed",
             message: "请先登陆!"
         });
         return;

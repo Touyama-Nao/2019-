@@ -33,14 +33,14 @@ router.post("/", function (req, res, next) { //一定要及时返回值不然会
                 return;
             } else {
                 res.json({
-                    result: "error",
+                    result: "failed",
                     message: "查询失败!"
                 });
                 return;
             }
         }else{
             res.json({
-                result: "error",
+                result: "failed",
                 message: "请先登录"
             });
             return;

@@ -37,7 +37,7 @@ router.get('/', function (req, res) {
 		}, function (err, docs) {
 			if (err) {
 				res.json({
-					result: "error",
+					result: "failed",
 					message: "参数错误!"
 				});
 				return;
@@ -75,7 +75,7 @@ router.get('/', function (req, res) {
 		})
 	} else if (req.session.sign != true) { //还没登陆!
 		res.json({
-			result: "error",
+			result: "failed",
 			message: "查询失败!用户未登录!qaq"
 		});
 		return;

@@ -41,7 +41,7 @@ router.post('/', function (req, res) {
 			return;
 		}
 		db.Mess.find({
-			id: req.body.id
+			id: parseInt(req.body.id)
 		}, {
 
 		}, function (err, docs) {
@@ -83,7 +83,7 @@ router.post('/', function (req, res) {
 			}
 		})
 		db.Mess.find({ //多层查找怎么写
-			id: req.session.userid //查找接受用户id 
+			id: parseInt(req.session.userid) //查找接受用户id 
 		}, {
 
 		}, function (err, docs) {
