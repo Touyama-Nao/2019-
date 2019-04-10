@@ -28,7 +28,7 @@ router.get('/', function (req, res) {
     res.set('Content-Type','text/plain');
     req.session.sign = false;
     req.session.userName = null; // 删除session
-    res.json({result:"登出成功!",message:null});
+    res.json({result:"success",message:"登出成功!"});
     return; //不然会报错304
 });
 
