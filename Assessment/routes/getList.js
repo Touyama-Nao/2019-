@@ -34,7 +34,7 @@ router.post("/", function (req, res, next) { //一定要及时返回值不然会
                 }
                 res.json({
                     result: "success",
-                    message: user
+                    message: postList
                 });
                 return;
             } else {
