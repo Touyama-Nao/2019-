@@ -14,7 +14,7 @@ var http = require('http');
 
 var port = normalizePort(process.env.PORT || '3000');
 //app.set('port', port);
-app.set('port', "http://127.0.0.1:3000");  //设置端口号
+app.set('port', "http://127.0.0.1:80");  //设置端口号
 
 /**
  * Create HTTP server.
