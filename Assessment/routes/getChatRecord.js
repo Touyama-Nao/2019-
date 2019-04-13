@@ -41,7 +41,7 @@ router.post('/', function (req, res) {
 			return;
 		}
 		db.Mess.find({
-			id: parseInt(req.body.id)
+			id: parseInt(req.session.userid)
 		}, {
 
 		}, function (err, docs) {
@@ -53,8 +53,11 @@ router.post('/', function (req, res) {
 				return;
 			} else {
 				var unread = [];
-				if (JSON.stringify(docs) != '[]') {
-					docs[0].HistoricalMess.forEach(function (each) {
+				console.log(docs);
+				console.log(JSON.stringify(docs));
+				console.log(JSON.stringify(docs) != '[]');
+				if (JSON.stringify(docs.UnreadMess) != '[]') {
+					docs[0].UnreadMess.forEach(function (each) {
 						if (each.receiver != req.body.id && each.sender != req.body.id) { //如果记录跟这个人有关的话
 							unread.push(each); //将这条记录放进去
 						}

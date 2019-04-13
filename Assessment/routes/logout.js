@@ -25,11 +25,22 @@ router.use(session({    // 使用 session 中间件
     cokkie: { maxAge: 60 * 1000 * 300 } //过期时间 ms
 }));
 router.get('/', function (req, res) {
-    res.set('Content-Type','text/plain');
-    req.session.sign = false;
-    req.session.userName = null; // 删除session
-    res.json({result:"success",message:"登出成功!"});
-    return; //不然会报错304
+    if(req.session.sign != true){   //还未登陆
+        res.set('Content-Type','text/plain');
+        req.session.sign = false;
+        req.session.userName = null; // 删除session
+        res.json({
+            result: "failed",
+            message: '同学你还没有登陆噢~'
+        });
+        return;
+    }else{
+        res.set('Content-Type','text/plain');
+        req.session.sign = false;
+        req.session.userName = null; // 删除session
+        res.json({result:"success",message:"登出成功!"});
+        return; //不然会报错304
+    }
 });
 
 module.exports = router;

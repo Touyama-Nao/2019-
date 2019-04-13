@@ -33,6 +33,13 @@ router.use(session({ // 使用 session 中间件
 router.post('/', function (req, res) {
 	/* res.set('Content-Type', 'text/plain'); */
 	if (req.session.sign == true) { //已经登陆!
+		if(req.body.receiver == req.session.userid){
+			res.json({
+				result:"failed",
+				message:"不能发消息给自己！"
+			});
+			return;
+		}
 		db.Mess.find({
 			id:	parseInt(req.body.receiver)//查找接受用户id 
 		}, function (err, doc) {
