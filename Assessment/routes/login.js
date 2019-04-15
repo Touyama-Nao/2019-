@@ -48,7 +48,7 @@ router.post('/', function (req, res) { //post请求用来提交表单
 	var accountname = req.body.account.replace(/<[^>]+>/g,"");//去掉所有的html标记
 	db.users.findOne({
 		'account': req.body.account,
-		'password': parseInt(req.body.password) //这里要注意parseInt!
+		'password': req.body.password //这里要注意parseInt!
 	}, {
 		"_id": 0,
 		"logindate": 0,
