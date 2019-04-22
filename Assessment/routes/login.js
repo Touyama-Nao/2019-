@@ -64,7 +64,7 @@ router.post('/', function (req, res) { //post请求用来提交表单
 			console.log(err);
 			res.json({
 				result: "failed",
-				message: '登陆失败!账号或密码错误'
+				message: '登录失败!账号或密码错误'
 			});
 			return;
 		}
@@ -97,7 +97,7 @@ router.post('/', function (req, res) { //post请求用来提交表单
 				req.session.userid = null //用来记住用户的id
 				res.json({
 					result: "failed",
-					message: '登陆失败!账号或密码错误'
+					message: '登录失败!账号或密码错误'
 				});
 				return;
 			}
@@ -115,7 +115,7 @@ router.post('/', function (req, res) { //post请求用来提交表单
 				}else if(req.session.userName != req.body.account){
 					res.json({
 						result: "failed",
-						message: '登陆失败!当前帐号还未登出!',
+						message: '登录失败!当前帐号还未登出!',
 					});
 					return;
 				}
@@ -125,7 +125,7 @@ router.post('/', function (req, res) { //post请求用来提交表单
 				req.session.userid = null //用来记住用户的id
 				res.json({
 					result: "failed",
-					message: '登陆失败!账号或密码错误'
+					message: '登录失败!账号或密码错误'
 				});
 				return;
 			}
